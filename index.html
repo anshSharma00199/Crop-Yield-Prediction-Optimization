@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered Crop Yield Prediction and Optimization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" >
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand"><span class="brand-mark">🌾</span> AnnaData AI</div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><button data-page="home" class="active">Home</button></li>
+    <li><button data-page="predict">Predict</button></li>
+    <li><button data-page="result">Result</button></li>
+    <li><button data-page="optimize">Optimize</button></li>
+    <li><button data-page="dashboard">Dashboard</button></li>
+    <li><button data-page="scan">Scan</button></li>
+  </ul>
+</nav>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <h1>Know your harvest before you sow it.</h1>
+        <p class="sub">Tell us about your crop and field. Our AI automatically understands weather, soil, satellite and seasonal conditions to predict your harvest and improve it.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" data-goto="predict">Predict My Harvest</button>
+          <button class="btn btn-secondary" data-goto="dashboard">View Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="icon">🌾</span>
+        <h3>Farmer Friendly<span class="hi">किसान के अनुकूल</span></h3>
+        <ul>
+          <li>Voice input</li>
+          <li>Simple questions</li>
+          <li>Local language support</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📍</span>
+        <h3>Automatic Intelligence<span class="hi">स्वचालित जानकारी</span></h3>
+        <ul>
+          <li>GPS location</li>
+          <li>Weather detection</li>
+          <li>Soil identification</li>
+          <li>Satellite monitoring</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📈</span>
+        <h3>Actionable Results<span class="hi">उपयोगी परिणाम</span></h3>
+        <ul>
+          <li>Yield prediction</li>
+          <li>Water advice</li>
+          <li>Fertilizer guidance</li>
+          <li>Better crop recommendations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap section">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>Four simple questions. Everything else, we handle.</h2>
+      <p style="color:var(--muted)">No jargon about pH, rainfall or fertilizer kilograms per hectare — we fetch all of that for you in the background.</p>
+    </div>
+    <button class="btn btn-outline" data-goto="predict">Start my prediction →</button>
+  </div>
+</section>
+
+<!-- ============ PREDICT ============ -->
+<section class="page" id="page-predict">
+  <div class="wrap predict-head">
+    <div class="eyebrow">Predict</div>
+    <h2>Let's set up your field<span class="hi">अपने खेत की जानकारी दें</span></h2>
+    <p style="color:var(--muted)">Answer a few quick questions. AI fills in the rest.</p>
+    <div class="step-track"><span><i style="width:100%"></i></span><span><i style="width:100%"></i></span><span><i style="width:60%"></i></span><span><i style="width:0%"></i></span></div>
+  </div>
+
+  <div class="wrap">
+    <!-- Section 1: Crop -->
+    <div class="form-section">
+      <div class="field-heading">
+        <h3>Crop &amp; Field<span class="hi">फसल और खेत</span></h3>
+        <button class="mic-btn" title="Voice input (coming soon)" onclick="showToast('Voice input coming soon 🎙️')">🎤</button>
+      </div>
+      <div class="crop-grid" id="cropGrid"></div>
+    </div>
+
+    <!-- Section 2: Location -->
+    <div class="form-section">
+      <div class="field-heading">
+        <h3>Where is your field?<span class="hi">आपका खेत कहाँ है?</span></h3>
+        <button class="mic-btn" title="Voice input (coming soon)" onclick="showToast('Voice input coming soon 🎙️')">🎤</button>
+      </div>
+      <div class="locate-box">
+        <button class="btn btn-primary" id="locateBtn">📍 Detect My Location</button>
+        <p class="note">Weather and soil will be detected automatically.</p>
+        <div class="locate-result" id="locateResult" style="display:none;">
+          <div class="mini-card"><div class="label">Village</div><div class="value" id="locVillage">—</div></div>
+          <div class="mini-card"><div class="label">District</div><div class="value" id="locDistrict">—</div></div>
+          <div class="mini-card"><div class="label">State</div><div class="value" id="locState">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: Field size -->
+    <div class="form-section">
+      <div class="field-heading">
+        <h3>How big is your field?<span class="hi">खेत का आकार</span></h3>
+        <button class="mic-btn" title="Voice input (coming soon)" onclick="showToast('Voice input coming soon 🎙️')">🎤</button>
+      </div>
+      <div class="size-row">
+        <input type="number" id="fieldSize" placeholder="e.g. 2" min="0" step="0.1" value="2">
+        <select id="fieldUnit">
+          <option>Acre</option>
+          <option>Bigha</option>
+          <option>Hectare</option>
+          <option>Kanal</option>
+        </select>
+      </div>
+      <p class="note">Don't worry, we'll convert it automatically.</p>
+    </div>
+
+    <!-- Section 4: Irrigation -->
+    <div class="form-section">
+      <div class="field-heading">
+        <h3>Irrigation<span class="hi">सिंचाई</span></h3>
+        <button class="mic-btn" title="Voice input (coming soon)" onclick="showToast('Voice input coming soon 🎙️')">🎤</button>
+      </div>
+      <div class="icon-grid" id="irrigationGrid"></div>
+    </div>
+
+    <!-- Section 5: Fertilizer -->
+    <div class="form-section">
+      <div class="field-heading">
+        <h3>Which fertilizer do you use?<span class="hi">उर्वरक</span></h3>
+        <button class="mic-btn" title="Voice input (coming soon)" onclick="showToast('Voice input coming soon 🎙️')">🎤</button>
+      </div>
+      <div class="fert-grid" id="fertGrid"></div>
+      <div class="field-heading" style="margin-bottom:0;">
+        <h3 style="font-size:1rem;">How many bags?</h3>
+      </div>
+      <div class="stepper">
+        <button id="bagMinus">−</button>
+        <span class="count" id="bagCount">3</span>
+        <button id="bagPlus">+</button>
+        <span class="note" style="margin:0;">Bags</span>
+      </div>
+    </div>
+
+    <!-- Section 6: Smart Data -->
+    <div class="form-section">
+      <div class="smart-card">
+        <h3>AI is collecting your field conditions</h3>
+        <ul class="smart-list" id="smartList"></ul>
+      </div>
+    </div>
+
+    <div style="padding:34px 0 70px;">
+      <button class="btn btn-primary btn-full" id="predictBtn">Predict Harvest</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULT ============ -->
+<section class="page" id="page-result">
+  <div class="wrap" style="padding-top:40px;">
+    <div class="eyebrow">Result</div>
+    <h2>Your Harvest Prediction<span class="hi">आपकी फसल का अनुमान</span></h2>
+
+    <div class="result-hero">
+      <div class="result-main">
+        <div class="big-number" id="resultYield">18.4</div>
+        <div class="unit">Quintal / Acre</div>
+        <div class="result-stats">
+          <div><div class="num" id="resultProduction">36.8 Q</div><div class="lbl">Expected production</div></div>
+          <div><div class="num" id="resultConfidence">91%</div><div class="lbl">Confidence</div></div>
+        </div>
+      </div>
+      <div class="summary-cards">
+        <div class="row"><span>Crop</span><span id="sumCrop">Wheat</span></div>
+        <div class="row"><span>Village</span><span id="sumVillage">Agra</span></div>
+        <div class="row"><span>Area</span><span id="sumArea">2 Acre</span></div>
+        <div class="row"><span>Season</span><span id="sumSeason">Rabi</span></div>
+      </div>
+    </div>
+
+    <div class="yield-meter">
+      <h3 style="font-size:1.05rem;">Yield meter</h3>
+      <div class="meter-track"><div class="meter-marker" id="meterMarker" style="left:70%;"></div></div>
+      <div class="meter-labels"><span>Poor</span><span>Average</span><span>Good</span><span>Excellent</span></div>
+    </div>
+
+    <div class="weather-summary">
+      <h3 style="font-size:1.05rem;">🌦 Weather outlook</h3>
+      <div class="badge-row">
+        <span class="badge good">🌧 Rainfall: Good</span>
+        <span class="badge low">🌡 Heat stress: Low</span>
+        <span class="badge suitable">💧 Humidity: Suitable</span>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" data-goto="optimize">See optimization advice →</button>
+      <button class="btn btn-outline" data-goto="dashboard">View full dashboard</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPTIMIZE ============ -->
+<section class="page" id="page-optimize">
+  <div class="wrap" style="padding-top:40px; padding-bottom:70px;">
+    <div class="eyebrow">Optimize</div>
+    <h2>Improve this season's harvest<span class="hi">फसल सुधार सुझाव</span></h2>
+
+    <div class="opt-grid">
+      <div class="opt-card">
+        <div class="top-row"><span class="icon">💧</span><span class="impact-badge high">High Impact</span></div>
+        <h3>Water Management</h3>
+        <p>Rain is expected within 4 days. Delay irrigation to save approximately 18% water.</p>
+      </div>
+      <div class="opt-card">
+        <div class="top-row"><span class="icon">🌱</span><span class="impact-badge medium">Medium Impact</span></div>
+        <h3>Nutrient Advice</h3>
+        <p>Your field may respond better to nitrogen application during the vegetative stage.</p>
+      </div>
+      <div class="opt-card">
+        <div class="top-row"><span class="icon">🛰</span><span class="impact-badge healthy">Healthy</span></div>
+        <h3>Field Health</h3>
+        <p>Satellite imagery shows healthy vegetation with no major stress detected.</p>
+        <button class="btn btn-outline" data-goto="scan" style="padding:9px 18px; font-size:.88rem;">📷 Scan a photo for a closer look</button>
+      </div>
+      <div class="opt-card">
+        <div class="top-row"><span class="icon">🌾</span><span class="impact-badge future">Future Planning</span></div>
+        <h3>Alternative Crop</h3>
+        <p>Chickpea could generate 12% higher profit next season under similar conditions.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:40px;">Estimated benefit</h3>
+    <div class="benefit-grid">
+      <div class="benefit-card"><div class="val">18%</div><div class="lbl">Water Saved</div></div>
+      <div class="benefit-card"><div class="val">+11%</div><div class="lbl">Extra Yield</div></div>
+      <div class="benefit-card"><div class="val">₹9,400</div><div class="lbl">Income Increase</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" data-goto="dashboard">Go to dashboard →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="page" id="page-dashboard">
+  <div class="wrap" style="padding-top:40px; padding-bottom:70px;">
+    <div class="eyebrow">Dashboard</div>
+    <h2>Your field, at a glance<span class="hi">आपके खेत का सारांश</span></h2>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="farmer">Farmer View</button>
+      <button class="tab-btn" data-tab="expert">Expert View</button>
+    </div>
+
+    <!-- Farmer View -->
+    <div class="tab-panel active" id="tab-farmer">
+      <div class="dash-cards">
+        <div class="dash-card"><div class="lbl">Expected Harvest</div><div class="val">18.4 q/acre</div></div>
+        <div class="dash-card"><div class="lbl">Weather This Week</div><div class="val">Suitable</div></div>
+        <div class="dash-card"><div class="lbl">Next Irrigation</div><div class="val">Tomorrow</div></div>
+        <div class="dash-card"><div class="lbl">Crop Health</div><div class="val">Good</div></div>
+        <div class="dash-card"><div class="lbl">Latest Scan</div><div class="val" id="dashLatestScan">No scan yet</div></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-card"><h4>Weekly weather trend</h4><div id="chart-weather"></div></div>
+        <div class="chart-card"><h4>Crop health trend</h4><div id="chart-health"></div></div>
+        <div class="chart-card"><h4>Water usage</h4><div id="chart-water"></div></div>
+        <div class="chart-card"><h4>Yield history</h4><div id="chart-yieldhist"></div></div>
+      </div>
+    </div>
+
+    <!-- Expert View -->
+    <div class="tab-panel" id="tab-expert">
+      <div class="chart-grid">
+        <div class="chart-card"><h4>Rainfall vs Yield</h4><div id="chart-rainyield"></div></div>
+        <div class="chart-card"><h4>Temperature vs Yield</h4><div id="chart-tempyield"></div></div>
+        <div class="chart-card"><h4>Feature contribution</h4><div id="chart-feature"></div></div>
+        <div class="chart-card"><h4>Historical predictions</h4><div id="chart-history"></div></div>
+      </div>
+
+      <div class="data-panel">
+        <h3>Data collected automatically<span class="hi">स्वचालित रूप से एकत्रित डेटा</span></h3>
+        <ul class="data-list" id="autoDataList"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCAN (Computer Vision) ============ -->
+<section class="page" id="page-scan">
+  <div class="wrap" style="padding-top:40px; padding-bottom:70px;">
+    <div class="eyebrow">AI Vision</div>
+    <h2>Crop Health Scan<span class="hi">फसल स्वास्थ्य जांच</span></h2>
+    <p style="color:var(--muted); max-width:560px;">Take or upload a photo of your crop's leaves. Our AI looks at colour, spots and texture to spot stress early — before it spreads.</p>
+
+    <input type="file" id="scanFileInput" accept="image/*" capture="environment" style="display:none;">
+
+    <!-- Upload state -->
+    <div class="scan-drop" id="scanDrop" style="margin-top:26px;">
+      <span class="scan-icon">🌿📷</span>
+      <h3 style="margin:0;">Add a photo of the affected leaf or plant</h3>
+      <p class="note" style="margin:0;">Clear, close-up daylight photos work best.</p>
+      <div class="scan-drop-actions">
+        <button class="btn btn-primary" id="scanTakePhotoBtn">📷 Take Photo</button>
+        <button class="btn btn-outline" id="scanUploadBtn">🖼 Upload from Gallery</button>
+      </div>
+    </div>
+
+    <!-- Workspace: preview + results (hidden until a photo is chosen) -->
+    <div class="scan-workspace" id="scanWorkspace" style="display:none; margin-top:28px;">
+      <div class="scan-preview-wrap">
+        <img id="scanImg" src="" alt="Uploaded crop photo">
+        <svg class="overlay" id="scanOverlay" viewBox="0 0 400 300" preserveAspectRatio="none"></svg>
+        <div class="scan-loading" id="scanLoading">
+          <span class="spinner"></span>
+          <span id="scanLoadingText">Analysing leaf colour and texture…</span>
+        </div>
+      </div>
+
+      <div class="scan-result-card" id="scanResultCard" style="display:none;">
+        <div class="scan-condition">
+          <span class="dot-status" id="scanDot"></span>
+          <div>
+            <h3 id="scanConditionName">—</h3>
+            <span class="note" style="margin:2px 0 0;" id="scanConditionSub">—</span>
+          </div>
+        </div>
+        <div class="scan-metrics">
+          <div class="m"><div class="val" id="scanConfidence">—</div><div class="lbl">Confidence</div></div>
+          <div class="m"><div class="val" id="scanAffectedArea">—</div><div class="lbl">Affected area</div></div>
+          <div class="m"><div class="val" id="scanSeverity">—</div><div class="lbl">Severity</div></div>
+        </div>
+        <div class="scan-suggestions" id="scanSuggestions"></div>
+        <div class="result-actions" style="margin-top:24px;">
+          <button class="btn btn-primary" id="scanAgainBtn">📷 Scan another photo</button>
+          <button class="btn btn-outline" data-goto="dashboard">View in dashboard</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="scan-history" id="scanHistorySection" style="display:none;">
+      <h3 style="font-size:1.05rem;">Recent scans</h3>
+      <div class="scan-history-list" id="scanHistoryList"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 AnnaData AI — Built for Indian farmers.
+</footer>
+
+<div class="toast" id="toast"></div>
+</body>
+</html>
